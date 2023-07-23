@@ -187,11 +187,7 @@ public class RewardsGUI implements Listener {
                     return;
                 }
 
-                Bukkit.getLogger().info(String.valueOf(lastDay));
-
                 if (lastDay != -1) {
-                    Bukkit.getLogger().info(String.valueOf(DataHelper.hasItBeenDays(1, p)));
-
                     if (DataHelper.hasItBeenDays(1, p) != null && Boolean.FALSE.equals(DataHelper.hasItBeenDays(1, p))) {
                         p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 1)));
                         e.getView().close();

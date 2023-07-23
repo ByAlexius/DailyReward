@@ -45,7 +45,7 @@ public class DataHelper {
 
         LocalDateTime now = LocalDateTime.now();
 
-        String pattern = "dd/M/yyyy H:mm:ss";
+        String pattern = "dd/MM/yyyy HH:mm:ss";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
 
         fc.set(DATA_PREFIX + p.getUniqueId() + ".lastUse", now.format(formatter));
@@ -81,7 +81,7 @@ public class DataHelper {
             return null;
         }
 
-        String pattern = "dd/M/yyyy H:mm:ss";
+        String pattern = "dd/MM/yyyy HH:mm:ss";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         LocalDateTime storedDate = LocalDateTime.parse(s, formatter);
 
@@ -90,6 +90,16 @@ public class DataHelper {
         long daysDifference = ChronoUnit.DAYS.between(storedDate, now);
 
         return daysDifference == days;
+    }
+
+    public static long daysPassed(String date) {
+        String pattern = "dd/MM/yyyy HH:mm:ss";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        LocalDateTime storedDate = LocalDateTime.parse(date, formatter);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        return ChronoUnit.DAYS.between(storedDate, now);
     }
 
     public static String getTimeUntilNextDay(LocalDateTime now, int day) {

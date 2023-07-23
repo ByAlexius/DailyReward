@@ -33,6 +33,8 @@ public class RewardsCommand implements CommandExecutor {
 
         gui.openGUI(p);
 
+        DailyRewards.getInstance().getRewardsData().getFileConfiguration().set("rewards." + p.getUniqueId() + ".lastDay", "0");
+
         return true;
     }
 }
