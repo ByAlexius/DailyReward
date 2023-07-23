@@ -53,7 +53,7 @@ public class DailyRewards extends JavaPlugin {
         localization.getFileConfiguration().addDefault("mustBeAPlayer", "You must be a player to execute this command!");
         localization.getFileConfiguration().addDefault("internalError", "An internal error occurred, please contact a Server Administrator!");
         localization.getFileConfiguration().addDefault("cancelledByOtherPlugin", "The reward was canceled by another plugin!");
-        localization.getFileConfiguration().addDefault("reusable", "You can redeem this reward in %remainingTime%.");
+        localization.getFileConfiguration().addDefault("reusable", "You can redeem your next reward in %remainingTime%.");
         localization.getFileConfiguration().addDefault("redeemed", "You've redeemed your daily reward!");
         localization.getFileConfiguration().addDefault("timeUntilNextReceiveHours", "Hour/s");
         localization.getFileConfiguration().addDefault("timeUntilNextReceiveMinute", "Minute/s");
