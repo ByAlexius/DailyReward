@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.logging.Level;
 
 public class RewardsGUI implements Listener {
@@ -41,9 +42,34 @@ public class RewardsGUI implements Listener {
         items[5] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 6");
         items[6] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 7");
 
+        if (DailyRewards.getInstance().getCfg().getString("rewards.day1.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day1.lore").trim().equals(""))
+            items[0] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 1", DailyRewards.getInstance().getCfg().getString("rewards.day1.lore"));
+
+        if (DailyRewards.getInstance().getCfg().getString("rewards.day2.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day2.lore").trim().equals(""))
+            items[1] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 2", DailyRewards.getInstance().getCfg().getString("rewards.day2.lore"));
+
+        if (DailyRewards.getInstance().getCfg().getString("rewards.day3.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day3.lore").trim().equals(""))
+            items[2] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 3", DailyRewards.getInstance().getCfg().getString("rewards.day3.lore"));
+
+        if (DailyRewards.getInstance().getCfg().getString("rewards.day4.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day4.lore").trim().equals(""))
+            items[3] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 4", DailyRewards.getInstance().getCfg().getString("rewards.day4.lore"));
+
+        if (DailyRewards.getInstance().getCfg().getString("rewards.day5.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day5.lore").trim().equals(""))
+            items[4] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 5", DailyRewards.getInstance().getCfg().getString("rewards.day5.lore"));
+
+        if (DailyRewards.getInstance().getCfg().getString("rewards.day6.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day6.lore").trim().equals(""))
+            items[5] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 6", DailyRewards.getInstance().getCfg().getString("rewards.day6.lore"));
+
+        if (DailyRewards.getInstance().getCfg().getString("rewards.day7.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day7.lore").trim().equals(""))
+            items[6] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 7", DailyRewards.getInstance().getCfg().getString("rewards.day7.lore"));
+
         for (int i = 0; i <= DataHelper.getLastDay(p) - 1; i++) {
             int d = i + 1;
-            items[i] = createGUIItem(Material.MINECART, nameOfDay + " " + d);
+
+            if (DailyRewards.getInstance().getCfg().getString("rewards.day" + d + ".lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day" + d + ".lore").trim().equals(""))
+                items[i] = createGUIItem(Material.MINECART, nameOfDay + " " + d, DailyRewards.getInstance().getCfg().getString("rewards.day" + d + ".lore"));
+            else
+                items[i] = createGUIItem(Material.MINECART, nameOfDay + " " + d);
         }
 
         ItemStack glass = createGUIItem(Material.BLACK_STAINED_GLASS_PANE, " ");
@@ -86,7 +112,7 @@ public class RewardsGUI implements Listener {
         p.openInventory(inv);
     }
 
-    protected ItemStack createGUIItem(final Material material, final String name) {
+    protected ItemStack createGUIItem(final Material material, final String name, final String... lore) {
         final ItemStack itemStack = new ItemStack(material, 1);
         final ItemMeta meta = itemStack.getItemMeta();
 
@@ -94,6 +120,8 @@ public class RewardsGUI implements Listener {
             return null;
 
         meta.setDisplayName(name);
+
+        meta.setLore(Arrays.asList(lore));
 
         itemStack.setItemMeta(meta);
 
