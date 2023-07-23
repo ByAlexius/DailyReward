@@ -1,6 +1,6 @@
 name: DailyRewards
 load: POSTWORLD
-version: 0.1
+version: 1.0
 author: ByAlexius
 main: net.byalexius.rewards.DailyRewards
 api-version: 1.20

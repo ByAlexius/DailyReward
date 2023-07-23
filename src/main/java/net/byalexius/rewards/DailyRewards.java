@@ -24,7 +24,7 @@ public class DailyRewards extends JavaPlugin {
     private Config localization;
 
     @Getter
-    private final String PREFIX = localization.getFileConfiguration().getString("pluginPrefix");
+    private String PREFIX;
 
     @Override
     public void onEnable() {
@@ -34,6 +34,7 @@ public class DailyRewards extends JavaPlugin {
 
         localization = new Config("messages.yml", getDataFolder());
         addDefaultForLocalization();
+        PREFIX = localization.getFileConfiguration().getString("pluginPrefix");
 
         if (!getCfg().getBoolean("enabled")) {
             return;
@@ -57,6 +58,7 @@ public class DailyRewards extends JavaPlugin {
         localization.getFileConfiguration().addDefault("timeUntilNextReceiveHours", "Hour/s");
         localization.getFileConfiguration().addDefault("timeUntilNextReceiveMinute", "Minute/s");
         localization.getFileConfiguration().addDefault("timeUntilNextReceiveSecond", "Second/s");
+        localization.getFileConfiguration().addDefault("nameOfDayInGui", "Day");
         localization.getFileConfiguration().options().copyDefaults(true);
         localization.save();
     }

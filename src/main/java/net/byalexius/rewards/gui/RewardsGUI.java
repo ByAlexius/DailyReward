@@ -31,17 +31,19 @@ public class RewardsGUI implements Listener {
         if (p == null)
             return;
 
-        items[0] = createGUIItem(Material.CHEST_MINECART, "Day 1");
-        items[1] = createGUIItem(Material.CHEST_MINECART, "Day 2");
-        items[2] = createGUIItem(Material.CHEST_MINECART, "Day 3");
-        items[3] = createGUIItem(Material.CHEST_MINECART, "Day 4");
-        items[4] = createGUIItem(Material.CHEST_MINECART, "Day 5");
-        items[5] = createGUIItem(Material.CHEST_MINECART, "Day 6");
-        items[6] = createGUIItem(Material.CHEST_MINECART, "Day 7");
+        String nameOfDay = DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("nameOfDayInGui");
+
+        items[0] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 1");
+        items[1] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 2");
+        items[2] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 3");
+        items[3] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 4");
+        items[4] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 5");
+        items[5] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 6");
+        items[6] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 7");
 
         for (int i = 0; i <= DataHelper.getLastDay(p) - 1; i++) {
             int d = i + 1;
-            items[i] = createGUIItem(Material.MINECART, "Day " + d);
+            items[i] = createGUIItem(Material.MINECART, nameOfDay + " " + d);
         }
 
         ItemStack glass = createGUIItem(Material.BLACK_STAINED_GLASS_PANE, " ");
@@ -163,15 +165,7 @@ public class RewardsGUI implements Listener {
                     Bukkit.getLogger().info(String.valueOf(DataHelper.hasItBeenDays(1, p)));
 
                     if (DataHelper.hasItBeenDays(1, p) != null && Boolean.FALSE.equals(DataHelper.hasItBeenDays(1, p))) {
-                        switch (day) {
-                            case 1 -> p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 1)));
-                            case 2 -> p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 2)));
-                            case 3 -> p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 3)));
-                            case 4 -> p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 4)));
-                            case 5 -> p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 5)));
-                            case 6 -> p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 6)));
-                            case 7 -> p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 7)));
-                        }
+                        p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 1)));
                         e.getView().close();
                         return;
                     }
