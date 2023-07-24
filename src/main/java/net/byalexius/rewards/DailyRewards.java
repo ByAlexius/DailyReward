@@ -4,7 +4,9 @@ import lombok.Getter;
 import net.byalexius.rewards.commands.RewardsCommand;
 import net.byalexius.rewards.config.Config;
 import net.byalexius.rewards.gui.RewardsGUI;
+import net.byalexius.rewards.helper.ColorHelper;
 import net.byalexius.rewards.helper.DailyRunnable;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,6 +29,9 @@ public class DailyRewards extends JavaPlugin {
     private String PREFIX;
 
     @Getter
+    private ChatColor PREFIX_CHATCOLOR;
+
+    @Getter
     private String GUI_NAME;
 
     @Override
@@ -39,6 +44,14 @@ public class DailyRewards extends JavaPlugin {
         addDefaultForLocalization();
 
         PREFIX = localization.getFileConfiguration().getString("pluginPrefix");
+
+        String cc_string = cfg.getString("colorOfMessagePrefix");
+
+        if (cc_string == null || cc_string.trim().equals(""))
+            PREFIX_CHATCOLOR = ChatColor.GREEN;
+        else
+            PREFIX_CHATCOLOR = ColorHelper.stringToChatColor(cc_string);
+
 
         String CGui = cfg.getString("guiName");
 
@@ -59,7 +72,7 @@ public class DailyRewards extends JavaPlugin {
     }
 
     private void addDefaultForLocalization() {
-        localization.getFileConfiguration().addDefault("pluginPrefix", "[Awards]");
+        localization.getFileConfiguration().addDefault("pluginPrefix", "[Rewards]");
         localization.getFileConfiguration().addDefault("alreadyRedeemed", "You have already redeemed your daily reward!");
         localization.getFileConfiguration().addDefault("noPerms", "You do not have enough permissions to execute this command!");
         localization.getFileConfiguration().addDefault("mustBeAPlayer", "You must be a player to execute this command!");
