@@ -26,6 +26,9 @@ public class DailyRewards extends JavaPlugin {
     @Getter
     private String PREFIX;
 
+    @Getter
+    private String GUI_NAME;
+
     @Override
     public void onEnable() {
         Instance = this;
@@ -34,9 +37,18 @@ public class DailyRewards extends JavaPlugin {
 
         localization = new Config("messages.yml", getDataFolder());
         addDefaultForLocalization();
+
         PREFIX = localization.getFileConfiguration().getString("pluginPrefix");
 
+        String CGui = cfg.getString("guiName");
+
+        if (CGui == null || CGui.trim().equals(""))
+            GUI_NAME = "Daily Rewards";
+        else
+            GUI_NAME = CGui.trim();
+
         if (!getCfg().getBoolean("enabled")) {
+            this.getPluginLoader().disablePlugin(this);
             return;
         }
 

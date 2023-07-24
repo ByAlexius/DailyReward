@@ -12,15 +12,19 @@ import java.time.temporal.ChronoUnit;
 
 public class DataHelper {
 
-    public static final String DATA_PREFIX = "rewards.";
+    private static final String DATA_PREFIX = "rewards.";
+    private static final String LD_DATA_SUFFIX = ".lastDay";
+    private static final String LU_DATA_SUFFIX = ".lastUse";
+
+    private static final String PATTERN = "dd/MM/yyyy HH:mm:ss";
 
     public static void addUserDataToFile(Player p, int day) {
         Config c = DailyRewards.getInstance().getRewardsData();
-        FileConfiguration fc = DailyRewards.getInstance().getRewardsData().getFileConfiguration();
+        FileConfiguration fc_data = DailyRewards.getInstance().getRewardsData().getFileConfiguration();
 
         c.reload();
 
-        String s = fc.getString(DATA_PREFIX + p.getUniqueId() + ".lastDay");
+        String s = fc_data.getString(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX);
 
         int lastDay = 0;
 
@@ -30,25 +34,24 @@ public class DataHelper {
 
         if (day == -1) {
             switch (lastDay) {
-                case 0 -> fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", 1);
-                case 1 -> fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", 2);
-                case 2 -> fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", 3);
-                case 3 -> fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", 4);
-                case 4 -> fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", 5);
-                case 5 -> fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", 6);
-                case 6 -> fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", 7);
-                case 7 -> fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", 0);
+                case 0 -> fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, 1);
+                case 1 -> fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, 2);
+                case 2 -> fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, 3);
+                case 3 -> fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, 4);
+                case 4 -> fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, 5);
+                case 5 -> fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, 6);
+                case 6 -> fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, 7);
+                case 7 -> fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, 0);
             }
         } else {
-            fc.set(DATA_PREFIX + p.getUniqueId() + ".lastDay", day);
+            fc_data.set(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX, day);
         }
 
         LocalDateTime now = LocalDateTime.now();
 
-        String pattern = "dd/MM/yyyy HH:mm:ss";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
 
-        fc.set(DATA_PREFIX + p.getUniqueId() + ".lastUse", now.format(formatter));
+        fc_data.set(DATA_PREFIX + p.getUniqueId() + LU_DATA_SUFFIX, now.format(formatter));
 
         c.save();
         c.reload();
@@ -56,11 +59,11 @@ public class DataHelper {
 
     public static int getLastDay(Player p) {
         Config c = DailyRewards.getInstance().getRewardsData();
-        FileConfiguration fc = DailyRewards.getInstance().getRewardsData().getFileConfiguration();
+        FileConfiguration fc_data = DailyRewards.getInstance().getRewardsData().getFileConfiguration();
 
         c.reload();
 
-        String s = fc.getString(DATA_PREFIX + p.getUniqueId() + ".lastDay");
+        String s = fc_data.getString(DATA_PREFIX + p.getUniqueId() + LD_DATA_SUFFIX);
 
         if (s == null || s.trim().equals("")) {
             return -1;
@@ -71,18 +74,17 @@ public class DataHelper {
 
     public static Boolean hasItBeenDays(int days, Player p) {
         Config c = DailyRewards.getInstance().getRewardsData();
-        FileConfiguration fc = DailyRewards.getInstance().getRewardsData().getFileConfiguration();
+        FileConfiguration fc_data = DailyRewards.getInstance().getRewardsData().getFileConfiguration();
 
         c.reload();
 
-        String s = fc.getString(DATA_PREFIX + p.getUniqueId() + ".lastUse");
+        String s = fc_data.getString(DATA_PREFIX + p.getUniqueId() + LU_DATA_SUFFIX);
 
         if (s == null || s.trim().equals("")) {
             return null;
         }
 
-        String pattern = "dd/MM/yyyy HH:mm:ss";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
         LocalDateTime storedDate = LocalDateTime.parse(s, formatter);
 
         LocalDateTime now = LocalDateTime.now();
@@ -93,8 +95,7 @@ public class DataHelper {
     }
 
     public static long daysPassed(String date) {
-        String pattern = "dd/MM/yyyy HH:mm:ss";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
         LocalDateTime storedDate = LocalDateTime.parse(date, formatter);
 
         LocalDateTime now = LocalDateTime.now();
@@ -103,10 +104,11 @@ public class DataHelper {
     }
 
     public static String getTimeUntilNextDay(LocalDateTime now, int day) {
+        FileConfiguration fc_loc = DailyRewards.getInstance().getLocalization().getFileConfiguration();
 
-        String h = DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("timeUntilNextReceiveHours");
-        String m = DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("timeUntilNextReceiveMinute");
-        String s2 = DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("timeUntilNextReceiveSecond");
+        String h = fc_loc.getString("timeUntilNextReceiveHours");
+        String m = fc_loc.getString("timeUntilNextReceiveMinute");
+        String s2 = fc_loc.getString("timeUntilNextReceiveSecond");
 
         LocalDateTime morning = now.toLocalDate().plusDays(day).atTime(LocalTime.of(0,0));
         long s = ChronoUnit.SECONDS.between(now, morning);

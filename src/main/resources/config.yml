@@ -1,5 +1,9 @@
 enabled: true
 
+# Here can you set the name of the GUI in-game.
+guiName: Daily Rewards
+
+# Set the lore for the GUI Items on specific days.
 rewards:
   day1:
     lore:
