@@ -2,7 +2,6 @@ package net.byalexius.rewards.commands;
 
 import net.byalexius.rewards.DailyRewards;
 import net.byalexius.rewards.gui.RewardsGUI;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +24,7 @@ public class RewardsCommand implements CommandExecutor {
         Player p = (Player) sender;
         
         if (!p.hasPermission("daily.use")) {
-            p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("noPerms"));
+            p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getMESSAGE_CHATCOLOR_ERROR() + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("noPerms"));
             return false;
         }
 

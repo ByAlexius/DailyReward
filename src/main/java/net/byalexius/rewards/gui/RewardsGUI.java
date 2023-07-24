@@ -150,7 +150,7 @@ public class RewardsGUI implements Listener {
 
         switch (clickedItem.getType()) {
             case MINECART -> {
-                p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("alreadyRedeemed"));
+                p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getMESSAGE_CHATCOLOR_ERROR() + fc_loc.getString("alreadyRedeemed"));
                 e.getView().close();
             }
             case CHEST_MINECART -> {
@@ -160,7 +160,7 @@ public class RewardsGUI implements Listener {
 
                 if (meta == null) {
                     Bukkit.getLogger().log(Level.SEVERE, "The Item Meta on the Item that the user " + p.getName() + " (" + p.getUniqueId() + ")" + " selected was null!");
-                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("internalError"));
+                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getMESSAGE_CHATCOLOR_ERROR() + fc_loc.getString("internalError"));
                     e.getView().close();
                     return;
                 }
@@ -180,7 +180,7 @@ public class RewardsGUI implements Listener {
 
                 if (day == -1) {
                     Bukkit.getLogger().log(Level.SEVERE, "The Item that the user " + p.getName() + " (" + p.getUniqueId() + ")" + " selected had a DisplayName that the Plugin did not recognize!");
-                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("internalError"));
+                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getMESSAGE_CHATCOLOR_ERROR() + fc_loc.getString("internalError"));
                     e.getView().close();
                     return;
                 }
@@ -188,14 +188,14 @@ public class RewardsGUI implements Listener {
                 int lastDay = DataHelper.getLastDay(p);
 
                 if (day <= lastDay) {
-                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("alreadyRedeemed"));
+                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getMESSAGE_CHATCOLOR_ERROR() + fc_loc.getString("alreadyRedeemed"));
                     e.getView().close();
                     return;
                 }
 
                 if (lastDay != -1) {
                     if (DataHelper.hasItBeenDays(1, p) != null && Boolean.FALSE.equals(DataHelper.hasItBeenDays(1, p))) {
-                        p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 1)));
+                        p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getMESSAGE_CHATCOLOR_ERROR() + fc_loc.getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 1)));
                         e.getView().close();
                         return;
                     }
@@ -218,13 +218,13 @@ public class RewardsGUI implements Listener {
                 if (!receiveRewardEvent.isCancelled()) {
                     DataHelper.addUserDataToFile(p, -1);
                 } else {
-                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("cancelledByOtherPlugin"));
+                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getMESSAGE_CHATCOLOR_ERROR() + fc_loc.getString("cancelledByOtherPlugin"));
                     Bukkit.getLogger().info(DailyRewards.getInstance().getPREFIX() +  " " + fc_loc.getString("cancelledByOtherPlugin"));
                 }
 
                 e.getView().close();
                 p.playNote(p.getLocation(), Instrument.PLING, Note.natural(1, Note.Tone.A));
-                p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.GOLD + fc_loc.getString("redeemed"));
+                p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getMESSAGE_CHATCOLOR_REDEEMED() + fc_loc.getString("redeemed"));
 
                 // Used to block the User from using SHIFT + CLICK to take an item from custom inventory
                 p.updateInventory();

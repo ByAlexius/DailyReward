@@ -6,6 +6,12 @@ enabled: true
 # Yes, MAGIC is allowed
 colorOfMessagePrefix:
 
+# Please refer to the description above
+colorOfRedeemedMessage:
+
+# Please refer to the description above
+colorOfErrorMessage:
+
 # Here you can set the name of the GUI in-game.
 guiName:
 

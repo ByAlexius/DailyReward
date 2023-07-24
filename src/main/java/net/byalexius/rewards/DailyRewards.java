@@ -29,10 +29,16 @@ public class DailyRewards extends JavaPlugin {
     private String PREFIX;
 
     @Getter
+    private String GUI_NAME;
+
+    @Getter
     private ChatColor PREFIX_CHATCOLOR;
 
     @Getter
-    private String GUI_NAME;
+    private ChatColor MESSAGE_CHATCOLOR_REDEEMED;
+
+    @Getter
+    private ChatColor MESSAGE_CHATCOLOR_ERROR;
 
     @Override
     public void onEnable() {
@@ -47,18 +53,9 @@ public class DailyRewards extends JavaPlugin {
 
         String cc_string = cfg.getString("colorOfMessagePrefix");
 
-        if (cc_string == null || cc_string.trim().equals(""))
-            PREFIX_CHATCOLOR = ChatColor.GREEN;
-        else
-            PREFIX_CHATCOLOR = ColorHelper.stringToChatColor(cc_string);
+        initCustomColors(cc_string);
 
-
-        String CGui = cfg.getString("guiName");
-
-        if (CGui == null || CGui.trim().equals(""))
-            GUI_NAME = "Daily Rewards";
-        else
-            GUI_NAME = CGui.trim();
+        initCustomName();
 
         if (!getCfg().getBoolean("enabled")) {
             this.getPluginLoader().disablePlugin(this);
@@ -69,6 +66,40 @@ public class DailyRewards extends JavaPlugin {
         registerCommands();
 
         runDailyTask();
+    }
+
+    private void initCustomName() {
+        String CGui = cfg.getString("guiName");
+
+        if (CGui == null || CGui.trim().equals(""))
+            GUI_NAME = "Daily Rewards";
+        else
+            GUI_NAME = CGui.trim();
+    }
+
+    private void initCustomColors(String cc_string) {
+
+        // PREFIX COLOR
+        if (cc_string == null || cc_string.trim().equals(""))
+            PREFIX_CHATCOLOR = ChatColor.GREEN;
+        else
+            PREFIX_CHATCOLOR = ColorHelper.stringToChatColor(cc_string);
+
+        // REDEEMED MESSAGE COLOR
+        String mcc_string = cfg.getString("colorOfRedeemedMessage");
+
+        if (mcc_string == null || mcc_string.trim().equals(""))
+            MESSAGE_CHATCOLOR_REDEEMED = ChatColor.GOLD;
+        else
+            MESSAGE_CHATCOLOR_REDEEMED = ColorHelper.stringToChatColor(mcc_string);
+
+        // ERROR MESSAGE COLOR
+        String mcce_string = cfg.getString("colorOfErrorMessage");
+
+        if (mcce_string == null || mcce_string.trim().equals(""))
+            MESSAGE_CHATCOLOR_ERROR = ChatColor.RED;
+        else
+            MESSAGE_CHATCOLOR_ERROR = ColorHelper.stringToChatColor(mcce_string);
     }
 
     private void addDefaultForLocalization() {
