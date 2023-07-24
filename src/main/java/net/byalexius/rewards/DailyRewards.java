@@ -5,7 +5,7 @@ import net.byalexius.rewards.commands.RewardsCommand;
 import net.byalexius.rewards.config.Config;
 import net.byalexius.rewards.gui.RewardsGUI;
 import net.byalexius.rewards.helper.ColorHelper;
-import net.byalexius.rewards.helper.DailyRunnable;
+import net.byalexius.rewards.runnable.DailyRunnable;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;

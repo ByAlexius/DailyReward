@@ -1,6 +1,7 @@
-package net.byalexius.rewards.helper;
+package net.byalexius.rewards.runnable;
 
 import net.byalexius.rewards.DailyRewards;
+import net.byalexius.rewards.helper.DataHelper;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
