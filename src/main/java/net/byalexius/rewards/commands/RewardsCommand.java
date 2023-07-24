@@ -25,7 +25,7 @@ public class RewardsCommand implements CommandExecutor {
         Player p = (Player) sender;
         
         if (!p.hasPermission("daily.use")) {
-            p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("noPerms"));
+            p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("noPerms"));
             return false;
         }
 

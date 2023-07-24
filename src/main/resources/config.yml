@@ -1,5 +1,15 @@
 enabled: true
 
+# Here you can set the Color of the Message Prefix you defined in the message.yml
+# Please use the color names referenced here https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/ChatColor.html
+# Other colors won't work, unsupported ENUMS of this list are BOLD, ITALIC, RESET, STRIKETHROUGH and UNDERLINE
+# Yes, MAGIC is allowed
+colorOfMessagePrefix:
+
+# Here you can set the name of the GUI in-game.
+guiName:
+
+# Set the lore for the GUI Items on specific days.
 rewards:
   day1:
     lore:

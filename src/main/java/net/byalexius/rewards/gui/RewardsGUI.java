@@ -4,6 +4,7 @@ import net.byalexius.rewards.DailyRewards;
 import net.byalexius.rewards.event.ReceiveRewardEvent;
 import net.byalexius.rewards.helper.DataHelper;
 import org.bukkit.*;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,14 +21,17 @@ import java.util.logging.Level;
 public class RewardsGUI implements Listener {
     private Inventory inv;
 
+    private final String GUI_NAME = DailyRewards.getInstance().getGUI_NAME();
+
     public RewardsGUI(Player p) {
-        inv = Bukkit.createInventory(null, 27, "Daily Rewards");
+        inv = Bukkit.createInventory(null, 27, GUI_NAME);
 
         initItems(p);
     }
 
     private void initItems(Player p) {
         ItemStack[] items = new ItemStack[7];
+        FileConfiguration cfg = DailyRewards.getInstance().getCfg();
 
         if (p == null)
             return;
@@ -42,32 +46,32 @@ public class RewardsGUI implements Listener {
         items[5] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 6");
         items[6] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 7");
 
-        if (DailyRewards.getInstance().getCfg().getString("rewards.day1.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day1.lore").trim().equals(""))
-            items[0] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 1", DailyRewards.getInstance().getCfg().getString("rewards.day1.lore"));
+        if (cfg.getString("rewards.day1.lore") != null && !cfg.getString("rewards.day1.lore").trim().equals(""))
+            items[0] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 1", cfg.getString("rewards.day1.lore"));
 
-        if (DailyRewards.getInstance().getCfg().getString("rewards.day2.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day2.lore").trim().equals(""))
-            items[1] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 2", DailyRewards.getInstance().getCfg().getString("rewards.day2.lore"));
+        if (cfg.getString("rewards.day2.lore") != null && !cfg.getString("rewards.day2.lore").trim().equals(""))
+            items[1] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 2", cfg.getString("rewards.day2.lore"));
 
-        if (DailyRewards.getInstance().getCfg().getString("rewards.day3.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day3.lore").trim().equals(""))
-            items[2] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 3", DailyRewards.getInstance().getCfg().getString("rewards.day3.lore"));
+        if (cfg.getString("rewards.day3.lore") != null && !cfg.getString("rewards.day3.lore").trim().equals(""))
+            items[2] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 3", cfg.getString("rewards.day3.lore"));
 
-        if (DailyRewards.getInstance().getCfg().getString("rewards.day4.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day4.lore").trim().equals(""))
-            items[3] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 4", DailyRewards.getInstance().getCfg().getString("rewards.day4.lore"));
+        if (cfg.getString("rewards.day4.lore") != null && !cfg.getString("rewards.day4.lore").trim().equals(""))
+            items[3] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 4", cfg.getString("rewards.day4.lore"));
 
-        if (DailyRewards.getInstance().getCfg().getString("rewards.day5.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day5.lore").trim().equals(""))
-            items[4] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 5", DailyRewards.getInstance().getCfg().getString("rewards.day5.lore"));
+        if (cfg.getString("rewards.day5.lore") != null && !cfg.getString("rewards.day5.lore").trim().equals(""))
+            items[4] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 5", cfg.getString("rewards.day5.lore"));
 
-        if (DailyRewards.getInstance().getCfg().getString("rewards.day6.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day6.lore").trim().equals(""))
-            items[5] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 6", DailyRewards.getInstance().getCfg().getString("rewards.day6.lore"));
+        if (cfg.getString("rewards.day6.lore") != null && !cfg.getString("rewards.day6.lore").trim().equals(""))
+            items[5] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 6", cfg.getString("rewards.day6.lore"));
 
-        if (DailyRewards.getInstance().getCfg().getString("rewards.day7.lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day7.lore").trim().equals(""))
-            items[6] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 7", DailyRewards.getInstance().getCfg().getString("rewards.day7.lore"));
+        if (cfg.getString("rewards.day7.lore") != null && !cfg.getString("rewards.day7.lore").trim().equals(""))
+            items[6] = createGUIItem(Material.CHEST_MINECART, nameOfDay + " 7", cfg.getString("rewards.day7.lore"));
 
         for (int i = 0; i <= DataHelper.getLastDay(p) - 1; i++) {
             int d = i + 1;
 
-            if (DailyRewards.getInstance().getCfg().getString("rewards.day" + d + ".lore") != null && !DailyRewards.getInstance().getCfg().getString("rewards.day" + d + ".lore").trim().equals(""))
-                items[i] = createGUIItem(Material.MINECART, nameOfDay + " " + d, DailyRewards.getInstance().getCfg().getString("rewards.day" + d + ".lore"));
+            if (cfg.getString("rewards.day" + d + ".lore") != null && !cfg.getString("rewards.day" + d + ".lore").trim().equals(""))
+                items[i] = createGUIItem(Material.MINECART, nameOfDay + " " + d, cfg.getString("rewards.day" + d + ".lore"));
             else
                 items[i] = createGUIItem(Material.MINECART, nameOfDay + " " + d);
         }
@@ -130,10 +134,12 @@ public class RewardsGUI implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (!e.getView().getTitle().equals("Daily Rewards"))
+        if (!e.getView().getTitle().equals(GUI_NAME))
             return;
 
         e.setCancelled(true);
+
+        FileConfiguration fc_loc = DailyRewards.getInstance().getLocalization().getFileConfiguration();
 
         final ItemStack clickedItem = e.getCurrentItem();
 
@@ -144,7 +150,7 @@ public class RewardsGUI implements Listener {
 
         switch (clickedItem.getType()) {
             case MINECART -> {
-                p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("alreadyRedeemed"));
+                p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("alreadyRedeemed"));
                 e.getView().close();
             }
             case CHEST_MINECART -> {
@@ -154,7 +160,7 @@ public class RewardsGUI implements Listener {
 
                 if (meta == null) {
                     Bukkit.getLogger().log(Level.SEVERE, "The Item Meta on the Item that the user " + p.getName() + " (" + p.getUniqueId() + ")" + " selected was null!");
-                    p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("internalError"));
+                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("internalError"));
                     e.getView().close();
                     return;
                 }
@@ -174,7 +180,7 @@ public class RewardsGUI implements Listener {
 
                 if (day == -1) {
                     Bukkit.getLogger().log(Level.SEVERE, "The Item that the user " + p.getName() + " (" + p.getUniqueId() + ")" + " selected had a DisplayName that the Plugin did not recognize!");
-                    p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("internalError"));
+                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("internalError"));
                     e.getView().close();
                     return;
                 }
@@ -182,14 +188,14 @@ public class RewardsGUI implements Listener {
                 int lastDay = DataHelper.getLastDay(p);
 
                 if (day <= lastDay) {
-                    p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("alreadyRedeemed"));
+                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("alreadyRedeemed"));
                     e.getView().close();
                     return;
                 }
 
                 if (lastDay != -1) {
                     if (DataHelper.hasItBeenDays(1, p) != null && Boolean.FALSE.equals(DataHelper.hasItBeenDays(1, p))) {
-                        p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 1)));
+                        p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("reusable").replace("%remainingTime%", DataHelper.getTimeUntilNextDay(LocalDateTime.now(), 1)));
                         e.getView().close();
                         return;
                     }
@@ -212,13 +218,13 @@ public class RewardsGUI implements Listener {
                 if (!receiveRewardEvent.isCancelled()) {
                     DataHelper.addUserDataToFile(p, -1);
                 } else {
-                    p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("cancelledByOtherPlugin"));
-                    Bukkit.getLogger().info(DailyRewards.getInstance().getPREFIX() +  " " + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("cancelledByOtherPlugin"));
+                    p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.RED + fc_loc.getString("cancelledByOtherPlugin"));
+                    Bukkit.getLogger().info(DailyRewards.getInstance().getPREFIX() +  " " + fc_loc.getString("cancelledByOtherPlugin"));
                 }
 
                 e.getView().close();
                 p.playNote(p.getLocation(), Instrument.PLING, Note.natural(1, Note.Tone.A));
-                p.sendMessage(ChatColor.GREEN + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.GOLD + DailyRewards.getInstance().getLocalization().getFileConfiguration().getString("redeemed"));
+                p.sendMessage(DailyRewards.getInstance().getPREFIX_CHATCOLOR() + DailyRewards.getInstance().getPREFIX() +  " " + ChatColor.GOLD + fc_loc.getString("redeemed"));
 
                 // Used to block the User from using SHIFT + CLICK to take an item from custom inventory
                 p.updateInventory();
@@ -229,7 +235,7 @@ public class RewardsGUI implements Listener {
 
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent e) {
-        if (!e.getView().getTitle().equals("Daily Rewards"))
+        if (!e.getView().getTitle().equals(GUI_NAME))
             e.setCancelled(true);
     }
 }
